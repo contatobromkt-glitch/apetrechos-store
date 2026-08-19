@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apetrechos Calçados — Conforto e estilo em um só lugar</title>
+  <meta name="description" content="Loja online de calçados femininos: tênis, botas, sandálias, sapatilhas e saltos. Frete grátis acima de R$ 249,90 e até 10x sem juros.">
+  <meta name="theme-color" content="#FF66C4">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Mulish:wght@300;400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="index.html">
+  <a class="skip-link" href="#main">Ir para o conteúdo principal</a>
+  <div id="header"></div>
+
+  <main id="main">
+    <!-- Hero ------------------------------------------------------------->
+    <section class="hero" aria-label="Destaques da coleção">
+      <div class="container">
+        <div class="hero-slides" id="hero-slides"></div>
+      </div>
+      <div class="hero-dots" id="hero-dots" role="tablist" aria-label="Escolher destaque"></div>
+    </section>
+
+    <!-- Benefícios -------------------------------------------------------->
+    <section class="benefits" aria-label="Vantagens da loja">
+      <div class="container">
+        <div class="benefits-grid" id="benefits"></div>
+      </div>
+    </section>
+
+    <!-- Categorias -------------------------------------------------------->
+    <section class="section container">
+      <div class="section-head">
+        <div>
+          <p class="section-eyebrow">Comece por aqui</p>
+          <h2 class="section-title">Navegue por categoria</h2>
+        </div>
+        <a class="section-link" href="categoria.html">Ver tudo</a>
+      </div>
+      <div class="cat-scroller" id="cat-scroller"></div>
+    </section>
+
+    <!-- Atalho por tamanho ------------------------------------------------->
+    <section class="section-tight container">
+      <div class="panel" style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+        <div>
+          <p class="section-eyebrow" style="margin-bottom:4px">Atalho inteligente</p>
+          <h3 style="font-size:var(--fs-lg)">Já sabe seu número? Filtre a vitrine inteira</h3>
+        </div>
+        <div class="size-picker" id="home-sizes"></div>
+      </div>
+    </section>
+
+    <!-- Novidades ---------------------------------------------------------->
+    <section class="section container">
+      <div class="section-head">
+        <div>
+          <p class="section-eyebrow">Acabou de chegar</p>
+          <h2 class="section-title">Novidades da estação</h2>
+        </div>
+        <a class="section-link" href="categoria.html?tag=novidade">Ver novidades</a>
+      </div>
+      <div class="rail" id="rail-new"></div>
+    </section>
+
+    <!-- Editorial ---------------------------------------------------------->
+    <section class="section container">
+      <div class="editorial">
+        <article class="edit-card">
+          <div>
+            <p class="section-eyebrow" style="color:rgba(255,255,255,.7)">Seleção da vitrine</p>
+            <h3>O couro que envelhece bonito</h3>
+            <p>Botas e mules em couro legítimo, com solado costurado e forro que respira. Feitas para durar mais de uma estação.</p>
+            <a class="btn btn-ink" href="categoria.html?c=botas">Ver botas</a>
+          </div>
+        </article>
+        <article class="edit-card alt">
+          <div>
+            <p class="section-eyebrow" style="color:rgba(255,255,255,.7)">Outlet</p>
+            <h3>Até 40% off</h3>
+            <p>Últimos pares das coleções anteriores.</p>
+            <a class="btn btn-ink" href="categoria.html?sale=1">Aproveitar</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Mais vendidos ------------------------------------------------------>
+    <section class="section container">
+      <div class="section-head">
+        <div>
+          <p class="section-eyebrow">Escolha das clientes</p>
+          <h2 class="section-title">Os mais vendidos</h2>
+        </div>
+        <a class="section-link" href="categoria.html?tag=bestseller">Ver ranking</a>
+      </div>
+      <div class="rail" id="rail-best"></div>
+    </section>
+
+    <!-- Newsletter --------------------------------------------------------->
+    <section class="newsletter">
+      <div class="container">
+        <div class="newsletter-inner">
+          <div>
+            <p class="section-eyebrow">Lista vip</p>
+            <h2 class="section-title">10% off na primeira compra</h2>
+            <p class="text-muted" style="margin-top:12px;max-width:46ch">
+              Receba primeiro os lançamentos e as reposições de numeração. Sem spam — no máximo duas mensagens por mês.
+            </p>
+          </div>
+          <form class="form-row" id="news-form" novalidate>
+            <div class="field" id="news-field">
+              <label for="news-email">Seu melhor e-mail</label>
+              <input type="email" id="news-email" name="email" placeholder="voce@email.com"
+                     autocomplete="email" aria-describedby="news-hint">
+              <span class="hint" id="news-hint">Usamos seu e-mail apenas para novidades da loja.</span>
+            </div>
+            <button class="btn btn-lg" type="submit">Quero meu cupom</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+  <div id="drawers"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/imagery.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/home.js"></script>
+  <script src="assets/js/demo-agent.js"></script>
+</body>
+</html>
