@@ -67,6 +67,11 @@ function pickBrandBg(idStr) {
 }
 
 function productImage(product, variant = 0, opts = {}) {
+  // Fotos reais têm prioridade sobre o SVG gerado. `photos` é um array de
+  // caminhos; variant 1 (hover/2ª imagem) cai na 1ª foto se não houver outra.
+  if (product.photos && product.photos.length) {
+    return product.photos[variant] || product.photos[0];
+  }
   const w = opts.w || 600;
   const h = opts.h || 720;
   const [c1, c2] = opts.bg || pickBrandBg(product.id);

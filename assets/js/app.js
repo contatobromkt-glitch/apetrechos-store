@@ -196,12 +196,12 @@ function productCard(product, opts = {}) {
     <div class="card-body">
       <span class="card-brand">${product.brand}</span>
       <a class="card-name" href="${productUrl(product.id)}">${product.name}</a>
-      <span class="card-rating">${icon('star', 'icon')} ${product.rating.toFixed(1)}
-        <span class="text-muted">(${product.reviews})</span></span>
+      ${product.reviews > 0 ? `<span class="card-rating">${icon('star', 'icon')} ${product.rating.toFixed(1)}
+        <span class="text-muted">(${product.reviews})</span></span>` : ''}
       <div class="card-prices">
         <span class="price-now">${brl(product.price)}</span>
-        <span class="price-old">${brl(product.oldPrice)}</span>
-        <span class="price-off">${off}% off</span>
+        ${off > 0 ? `<span class="price-old">${brl(product.oldPrice)}</span>
+        <span class="price-off">${off}% off</span>` : ''}
       </div>
       <span class="card-install">${installmentText(product.price)}</span>
       <div class="card-colors">
@@ -283,7 +283,7 @@ function renderHeader() {
     </div>
     <div class="drawer-body">
       ${CATEGORIES.map((c) => `<a class="mobile-nav-link" href="${categoryUrl(c.slug)}">${c.name}${icon('chevronRight', 'icon icon-sm')}</a>`).join('')}
-      <a class="mobile-nav-link" href="categoria.html?sale=1" style="color:var(--primary)">Outlet${icon('chevronRight', 'icon icon-sm')}</a>
+      <a class="mobile-nav-link" href="categoria.html?c=infantil" style="color:var(--primary)">Infantil${icon('chevronRight', 'icon icon-sm')}</a>
     </div>
   </aside>
 

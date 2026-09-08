@@ -7,8 +7,9 @@ const PDP = { product: null, color: null, size: null, image: 0 };
 /* Simula ruptura de estoque: dois números do meio ficam indisponíveis
    quando o produto está com poucas peças. */
 function unavailableSizes(product) {
-  if (product.stock > 6) return [];
-  return product.sizes.slice(1, 3);
+  // As numerações listadas em cada produto já são as realmente disponíveis;
+  // não simulamos ruptura de estoque.
+  return [];
 }
 
 function starsMarkup(rating) {
@@ -31,7 +32,11 @@ function renderPdp() {
     <a href="${categoryUrl(p.category)}">${p.categoryName}</a>${icon('chevronRight')}
     <span aria-current="page">${p.name}</span>`;
 
-  const images = [0, 1, 2].map((i) => productImage(p, i % 2, { tint: PDP.color.hex }));
+  // Produtos com fotos reais mostram todas as fotos; os demais usam o SVG
+  // gerado em 3 ângulos.
+  const images = (p.photos && p.photos.length)
+    ? p.photos
+    : [0, 1, 2].map((i) => productImage(p, i % 2, { tint: PDP.color.hex }));
 
   document.getElementById('pdp').innerHTML = `
   <div class="gallery">
@@ -51,16 +56,16 @@ function renderPdp() {
   <div>
     <p class="pdp-brand">${p.brand}</p>
     <h1 class="pdp-title">${p.name}</h1>
-    <p class="pdp-rating">
+    ${p.reviews > 0 ? `<p class="pdp-rating">
       ${starsMarkup(p.rating)}
       <span>${p.rating.toFixed(1)} · ${p.reviews} avaliações</span>
-    </p>
+    </p>` : ''}
 
     <div class="pdp-price">
       <div class="card-prices">
         <span class="price-now">${brl(p.price)}</span>
-        <span class="price-old">${brl(p.oldPrice)}</span>
-        <span class="price-off">${off}% off</span>
+        ${off > 0 ? `<span class="price-old">${brl(p.oldPrice)}</span>
+        <span class="price-off">${off}% off</span>` : ''}
       </div>
       <p class="card-install" style="margin-top:4px">${installmentText(p.price)}</p>
       <span class="pdp-pix">${icon('tag', 'icon icon-sm')} ${brl(pixPrice)} no PIX (10% off)</span>

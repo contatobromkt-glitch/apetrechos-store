@@ -4,40 +4,40 @@
 
 const HERO = [
   {
-    eyebrow: 'Coleção alto verão',
-    title: 'O par certo <em>muda</em> o dia inteiro',
-    text: 'Modelagens testadas em uso real, numeração do 33 ao 40 e troca gratuita em 30 dias. Estilo que não cobra pedágio em conforto.',
-    ctaLabel: 'Ver a coleção',
+    eyebrow: 'Bem-vinda à Apetrechos',
+    title: 'O par certo <em>combina</em> com o seu dia',
+    text: 'Calçados femininos, masculinos e infantis das marcas que você conhece — Vizzano, Pegada, Mississipi e mais. Conforto e estilo para a família toda.',
+    ctaLabel: 'Ver a loja',
     ctaHref: 'categoria.html',
-    altLabel: 'Novidades',
-    altHref: 'categoria.html?tag=novidade',
-    productId: 's01',
-    tagKey: 'Salto bloco',
-    tagValue: 'a partir de R$ 149',
+    altLabel: 'Ver saltos',
+    altHref: 'categoria.html?c=saltos',
+    productId: 'h02',
+    tagKey: 'Vizzano',
+    tagValue: 'salto alto & meia-pata',
   },
   {
-    eyebrow: 'Couro legítimo',
-    title: 'Botas que <em>duram</em> mais de uma estação',
-    text: 'Cano estruturado, solado costurado e forro que respira. A peça que resolve o inverno inteiro do guarda-roupa.',
-    ctaLabel: 'Ver botas',
-    ctaHref: 'categoria.html?c=botas',
-    altLabel: 'Guia de tamanhos',
-    altHref: '#',
-    productId: 'b01',
-    tagKey: 'Mais vendida',
-    tagValue: '173 avaliações',
-  },
-  {
-    eyebrow: 'Outlet',
-    title: 'Últimos pares com até <em>40%</em> off',
-    text: 'Coleções anteriores com a mesma curadoria de sempre. Enquanto durar a numeração disponível.',
-    ctaLabel: 'Aproveitar o outlet',
-    ctaHref: 'categoria.html?sale=1',
+    eyebrow: 'Para os pequenos',
+    title: 'Do <em>recreio</em> ao passeio',
+    text: 'Tênis e sandálias infantis leves e resistentes — do Sonic ao esportivo. Numeração do 25 ao 33.',
+    ctaLabel: 'Ver infantil',
+    ctaHref: 'categoria.html?c=infantil',
     altLabel: 'Ver tênis',
     altHref: 'categoria.html?c=tenis',
-    productId: 't04',
-    tagKey: 'Frete grátis',
-    tagValue: 'acima de R$ 249',
+    productId: 'k06',
+    tagKey: 'Infantil',
+    tagValue: 'do 25 ao 33',
+  },
+  {
+    eyebrow: 'Para eles',
+    title: 'Sapatênis em <em>couro</em> legítimo',
+    text: 'Pegada e Strike com acabamento em couro e solado confortável. Do trabalho ao fim de semana.',
+    ctaLabel: 'Ver sapatênis',
+    ctaHref: 'categoria.html?c=sapatenis',
+    altLabel: 'Ver tênis',
+    altHref: 'categoria.html?c=tenis',
+    productId: 'sp02',
+    tagKey: 'Pegada',
+    tagValue: 'couro legítimo',
   },
 ];
 
@@ -128,10 +128,12 @@ function renderSizeShortcut() {
 }
 
 function renderRails() {
-  const news = Catalog.byTag('novidade').slice(0, 4);
-  const best = Catalog.byTag('bestseller').slice(0, 4);
-  document.getElementById('rail-new').innerHTML = news.map((p) => productCard(p, { reveal: true })).join('');
-  document.getElementById('rail-best').innerHTML = best.map((p) => productCard(p, { reveal: true })).join('');
+  // Loja nova: sem "mais vendidos" reais ainda. Vitrine 1 = destaques adultos,
+  // vitrine 2 = infantil.
+  const destaques = ['h02', 'sp01', 'r01', 't01'].map((id) => Catalog.byId(id)).filter(Boolean);
+  const kids = Catalog.byCategory('infantil').slice(0, 4);
+  document.getElementById('rail-new').innerHTML = destaques.map((p) => productCard(p, { reveal: true })).join('');
+  document.getElementById('rail-best').innerHTML = kids.map((p) => productCard(p, { reveal: true })).join('');
 }
 
 /* ------------------------------------------------------------------ Newsletter */
