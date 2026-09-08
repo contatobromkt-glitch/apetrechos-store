@@ -15,6 +15,7 @@ const CONFIG = {
   // LGPD
   privacyUrl: 'privacy.html',
   dpo: 'privacidade@apetrechos.com.br', // Encarregado de Dados (trocar pelo real)
+  cnpj: '', // CNPJ real da loja — vazio esconde do rodapé até ser informado
   // Back-end de checkout (frete Melhor Envio + pagamento PagBank).
   // Vazio = pagamento online desligado; o site usa só o WhatsApp.
   // Em produção, aponte para a URL do serviço apetrechos-checkout.

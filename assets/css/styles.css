@@ -524,7 +524,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 @media (hover: hover) { .card:hover .card-quick, .card:focus-within .card-quick { opacity: 1; transform: none; } }
-@media (hover: none) { .card-quick { opacity: 1; transform: none; } }
+@media (hover: none) { .card-quick { display: none; } }
 
 .card-body { padding-top: var(--sp-3); display: flex; flex-direction: column; gap: 4px; }
 .card-brand { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-subtle); font-weight: 600; }

@@ -250,12 +250,9 @@ function renderHeader() {
         </div>
         <div class="header-actions">
           <button class="icon-btn" type="button" data-theme-toggle></button>
-          <a class="icon-btn action-account" href="#" aria-label="Minha conta">
-            ${icon('user')}<span class="label">Entrar</span>
-          </a>
-          <a class="icon-btn" href="#" aria-label="Favoritos" id="wish-btn">
+          <button class="icon-btn" type="button" data-open-drawer="drawer-wish" aria-label="Meus favoritos" id="wish-btn">
             ${icon('heart')}<span class="badge-count" id="wish-count" hidden>0</span>
-          </a>
+          </button>
           <button class="icon-btn" type="button" data-open-drawer="drawer-cart" aria-label="Abrir sacola">
             ${icon('bag')}<span class="badge-count" id="cart-count" hidden>0</span>
           </button>
@@ -266,7 +263,6 @@ function renderHeader() {
       <div class="container">
         <ul class="nav-list">
           ${navItems}
-          <li><a class="nav-link is-sale" href="categoria.html?c=&sale=1">Outlet</a></li>
         </ul>
       </div>
     </nav>
@@ -283,8 +279,15 @@ function renderHeader() {
     </div>
     <div class="drawer-body">
       ${CATEGORIES.map((c) => `<a class="mobile-nav-link" href="${categoryUrl(c.slug)}">${c.name}${icon('chevronRight', 'icon icon-sm')}</a>`).join('')}
-      <a class="mobile-nav-link" href="categoria.html?c=infantil" style="color:var(--primary)">Infantil${icon('chevronRight', 'icon icon-sm')}</a>
     </div>
+  </aside>
+
+  <aside class="drawer drawer-right" id="drawer-wish" aria-hidden="true" aria-label="Meus favoritos">
+    <div class="drawer-head">
+      <span class="drawer-title">Meus favoritos</span>
+      <button class="icon-btn" type="button" data-close-drawer aria-label="Fechar favoritos">${icon('close')}</button>
+    </div>
+    <div class="drawer-body" id="wish-drawer-body"></div>
   </aside>
 
   <aside class="drawer drawer-right" id="drawer-cart" aria-hidden="true" aria-label="Sacola de compras">
@@ -303,18 +306,32 @@ function renderHeader() {
 
 /* ------------------------------------------------------------------ Rodapé */
 function renderFooter() {
-  const help = ['Central de ajuda', 'Trocas e devoluções', 'Prazos de entrega', 'Guia de tamanhos', 'Formas de pagamento'];
-  const about = ['Nossa história', 'Lojas físicas', 'Trabalhe conosco', 'Programa de indicação'];
+  const wa = `https://wa.me/${CONFIG.whatsapp}`;
+  const waAsk = (q) => `${wa}?text=${encodeURIComponent(q)}`;
+  const ajuda = [
+    ['Trocas e devoluções', waAsk('Olá! Tenho uma dúvida sobre trocas e devoluções.')],
+    ['Prazos de entrega', waAsk('Olá! Queria saber sobre o prazo de entrega.')],
+    ['Formas de pagamento', waAsk('Olá! Quais são as formas de pagamento?')],
+    ['Ajuda com a numeração', waAsk('Olá! Preciso de ajuda para escolher a numeração.')],
+  ];
+  const loja = [
+    ['Instagram @loja.apetrechos', CONFIG.instagram],
+    ['Política de Privacidade', CONFIG.privacyUrl],
+    ['Seus direitos (LGPD)', `${CONFIG.privacyUrl}#direitos`],
+    ['Fale no WhatsApp', wa],
+  ];
+  const linkList = (arr) => arr.map(([t, h]) =>
+    `<li><a href="${h}"${h.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${t}</a></li>`).join('');
   document.getElementById('footer').innerHTML = `
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col footer-brand">
           <img src="assets/img/logo-trans.png" alt="${CONFIG.brand} ${CONFIG.brandLine}" width="983" height="470" style="height:56px;width:auto">
-          <p style="margin-top:16px">${CONFIG.tagline}. Curadoria de calçados femininos com caimento testado, entrega para todo o Brasil e atendimento humano no WhatsApp.</p>
+          <p style="margin-top:16px">${CONFIG.tagline}. Calçados femininos, masculinos e infantis das melhores marcas, com entrega para todo o Brasil e atendimento humano no WhatsApp.</p>
           <div class="footer-social">
             <a href="${CONFIG.instagram}" target="_blank" rel="noopener" aria-label="Instagram da loja">${icon('instagram')}</a>
-            <a href="https://wa.me/${CONFIG.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp da loja">${icon('whatsapp')}</a>
+            <a href="${wa}" target="_blank" rel="noopener" aria-label="WhatsApp da loja">${icon('whatsapp')}</a>
           </div>
           <div class="footer-pay">
             ${['PIX', 'VISA', 'MASTER', 'ELO', 'AMEX', 'BOLETO'].map((p) => `<span class="pay-chip">${p}</span>`).join('')}
@@ -326,15 +343,15 @@ function renderFooter() {
         </div>
         <div class="footer-col">
           <h3>Ajuda</h3>
-          <ul>${help.map((h) => `<li><a href="#">${h}</a></li>`).join('')}</ul>
+          <ul>${linkList(ajuda)}</ul>
         </div>
         <div class="footer-col">
           <h3>A loja</h3>
-          <ul>${about.map((h) => `<li><a href="#">${h}</a></li>`).join('')}</ul>
+          <ul>${linkList(loja)}</ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© ${new Date().getFullYear()} ${CONFIG.brand} ${CONFIG.brandLine}. CNPJ 00.000.000/0001-00.</span>
+        <span>© ${new Date().getFullYear()} ${CONFIG.brand} ${CONFIG.brandLine}.${CONFIG.cnpj ? ` CNPJ ${CONFIG.cnpj}.` : ''}</span>
         <span class="footer-legal">
           <a href="${CONFIG.privacyUrl}">Política de Privacidade</a>
           <span aria-hidden="true">·</span>
@@ -343,7 +360,7 @@ function renderFooter() {
       </div>
     </div>
   </footer>
-  <a class="wa-float" href="https://wa.me/${CONFIG.whatsapp}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">${icon('whatsapp', 'icon icon-lg')}</a>`;
+  <a class="wa-float" href="${wa}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">${icon('whatsapp', 'icon icon-lg')}</a>`;
 }
 
 /* ------------------------------------------------------------------ LGPD: aviso */
@@ -428,6 +445,37 @@ function renderCartDrawer() {
     <button class="btn btn-ghost btn-block" type="button" data-close-drawer style="margin-top:8px">Continuar comprando</button>`;
 }
 
+/* ------------------------------------------------------------------ Favoritos: drawer */
+function renderWishDrawer() {
+  const body = document.getElementById('wish-drawer-body');
+  if (!body) return;
+  const items = Store.wish.map((id) => Catalog.byId(id)).filter(Boolean);
+  if (!items.length) {
+    body.innerHTML = `
+      <div class="empty-state">
+        ${icon('heart', 'icon icon-lg')}
+        <h3>Sua lista de favoritos está vazia</h3>
+        <p>Toque no coração dos produtos que você amar para guardá-los aqui.</p>
+        <a class="btn btn-ink" href="categoria.html">Explorar a vitrine</a>
+      </div>`;
+    return;
+  }
+  body.innerHTML = items.map((product) => `
+    <div class="cart-line">
+      <a href="${productUrl(product.id)}" aria-label="${product.name}"><img src="${productImage(product, 0)}" alt="${product.name}" width="76" height="92" loading="lazy"></a>
+      <div>
+        <span class="cart-line-brand">${product.brand}</span>
+        <a class="cart-line-name" href="${productUrl(product.id)}">${product.name}</a>
+        <div class="cart-line-bottom"><span class="cart-line-price">${brl(product.price)}</span></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px">
+          <a class="btn btn-ink" href="${productUrl(product.id)}" style="padding:8px 14px;font-size:var(--fs-xs)">Ver produto</a>
+          <button class="link-remove" type="button" data-wish="${product.id}"
+                  aria-label="Remover ${product.name} dos favoritos">${icon('trash', 'icon icon-sm')} Remover</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
 function syncBadges() {
   const cartCount = Store.count;
   const wishCount = Store.wish.length;
@@ -465,7 +513,7 @@ function bindSearch() {
             <span class="sr-meta">${p.brand} · ${brl(p.price)}</span>
           </span>
         </a>`).join('')
-      : `<p class="search-empty">Nada encontrado para “${q}”. Tente “bota”, “sandália” ou “tênis”.</p>`;
+      : `<p class="search-empty">Nada encontrado para “${q}”. Tente “Vizzano”, “tênis” ou “infantil”.</p>`;
   };
 
   input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(run, 180); });
@@ -504,6 +552,7 @@ function boot() {
   renderFooter();
   Theme.apply(Theme.get()); // reaplica nos botões recém-criados
   renderCartDrawer();
+  renderWishDrawer();
   syncBadges();
   bindSearch();
   renderConsentNotice();
@@ -532,6 +581,7 @@ function boot() {
 
   document.addEventListener('store:change', () => {
     renderCartDrawer();
+    renderWishDrawer();
     syncBadges();
     document.dispatchEvent(new CustomEvent('page:refresh'));
   });
