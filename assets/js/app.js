@@ -1,5 +1,5 @@
 /* =========================================================================
-   Apetrechos Calçados — Runtime compartilhado
+   Apetrechos Calçados, Runtime compartilhado
    Header, rodapé, sacola, favoritos, drawers, toasts e tema.
    ========================================================================= */
 
@@ -182,7 +182,7 @@ function productCard(product, opts = {}) {
   return `
   <article class="card${opts.reveal ? ' reveal' : ''}">
     <a class="card-media" href="${productUrl(product.id)}" aria-label="${product.name}">
-      <img src="${productImage(product, 0)}" alt="${product.name} — ${product.colors[0].name}" width="600" height="720" loading="lazy" decoding="async">
+      <img src="${productImage(product, 0)}" alt="${product.name}, ${product.colors[0].name}" width="600" height="720" loading="lazy" decoding="async">
       <img class="img-alt" src="${productImage(product, 1, { tint: (product.colors[1] || product.colors[0]).hex })}" alt="" aria-hidden="true" width="600" height="720" loading="lazy" decoding="async">
       <span class="card-badges">${badges.join('')}</span>
     </a>
@@ -236,7 +236,7 @@ function renderHeader() {
         <button class="icon-btn menu-toggle" type="button" data-open-drawer="drawer-menu" aria-label="Abrir menu de categorias">
           ${icon('menu')}
         </button>
-        <a class="logo" href="index.html" aria-label="${CONFIG.brand} ${CONFIG.brandLine} — início">
+        <a class="logo" href="index.html" aria-label="${CONFIG.brand} ${CONFIG.brandLine}, início">
           <img class="logo-img on-light" src="assets/img/logo-light.png" alt="${CONFIG.brand} ${CONFIG.brandLine}" width="983" height="470">
           <img class="logo-img on-dark" src="assets/img/logo-trans.png" alt="${CONFIG.brand} ${CONFIG.brandLine}" width="983" height="470" aria-hidden="true">
         </a>
@@ -528,21 +528,45 @@ function bindSearch() {
 }
 
 /* ------------------------------------------------------------------ Reveal on scroll */
+/* Movimento no scroll: dá a todos os blocos de conteúdo uma animação de
+   entrada/saída conforme entram e saem da tela (rolando para cima OU para
+   baixo). Idempotente, pode ser chamado após cada render. */
+const MOTION_SELECTOR = [
+  '.hero-eyebrow', '.hero-title', '.hero-text', '.hero-cta',
+  '.section-eyebrow', '.section-title', '.section-link',
+  '.benefit', '.card', '.edit-card', '.cat-tile', '.panel', '.filters',
+  '.pdp-brand', '.pdp-title', '.pdp-price', '.opt-block', '.accordion',
+  '.gallery-main', '.stock-note', '.cep-box', '.pdp-actions',
+  '.breadcrumb', '.cart-line', '.summary-row',
+  '.footer-col', '.newsletter-inner > div', '.form-row',
+  'main h2', 'main h3',
+].join(',');
+let _motionIO = null;
 function bindReveal() {
-  const items = document.querySelectorAll('.reveal:not(.is-in)');
+  // Tagueia os elementos de conteúdo (fora do cabeçalho, gavetas e carrossel).
+  document.querySelectorAll(MOTION_SELECTOR).forEach((el) => {
+    if (el.closest('#header') || el.closest('#drawers') || el.closest('.hero-slide')) return;
+    if (!el.classList.contains('reveal')) el.classList.add('reveal');
+  });
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = Array.from(document.querySelectorAll('.reveal')).filter((el) => !el.dataset.mv);
   if (!items.length) return;
-  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    items.forEach((el) => el.classList.add('is-in'));
+
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach((el) => { el.classList.add('is-in'); el.dataset.mv = '1'; });
     return;
   }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (!entry.isIntersecting) return;
-      setTimeout(() => entry.target.classList.add('is-in'), Math.min(i * 40, 200));
-      io.unobserve(entry.target);
-    });
-  }, { rootMargin: '0px 0px -8% 0px' });
-  items.forEach((el) => io.observe(el));
+  if (!_motionIO) {
+    _motionIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-in', entry.isIntersecting));
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  }
+  items.forEach((el, i) => {
+    el.dataset.mv = '1';
+    el.style.transitionDelay = (Math.min(i % 6, 5) * 45) + 'ms';
+    _motionIO.observe(el);
+  });
 }
 
 /* ------------------------------------------------------------------ Boot */

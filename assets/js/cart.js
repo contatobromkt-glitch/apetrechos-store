@@ -1,5 +1,5 @@
 /* =========================================================================
-   Sacola — revisão do pedido, cupom, frete e envio do pedido pelo WhatsApp
+   Sacola, revisão do pedido, cupom, frete e envio do pedido pelo WhatsApp
    ========================================================================= */
 
 const Cart = {
@@ -94,7 +94,7 @@ function renderCartPage() {
       <h2 class="panel-title">Cupom de desconto</h2>
       ${t.coupon
         ? `<div class="tag-filter" style="font-size:var(--fs-sm)">
-             ${icon('tag', 'icon icon-sm')} ${t.coupon} — ${COUPONS[t.coupon].label}
+             ${icon('tag', 'icon icon-sm')} ${t.coupon}, ${COUPONS[t.coupon].label}
              <button type="button" id="remove-coupon" aria-label="Remover cupom">${icon('close', 'icon icon-sm')}</button>
            </div>`
         : `<div class="coupon-row">
@@ -154,7 +154,7 @@ function renderCartPage() {
         <button class="btn btn-block btn-lg" type="button" id="pay-online" style="margin-top:12px">
           ${icon('card')} Pagar com PagBank
         </button>
-        <p class="text-muted" style="font-size:var(--fs-xs);text-align:center;margin-top:6px">Pix, cartão ou boleto — em ambiente seguro do PagBank.</p>` : ''}
+        <p class="text-muted" style="font-size:var(--fs-xs);text-align:center;margin-top:6px">Pix, cartão ou boleto, em ambiente seguro do PagBank.</p>` : ''}
     </div>` : ''}
 
     <button class="btn btn-block btn-lg ${hasCheckoutApi() ? 'btn-outline' : ''}" type="button" id="checkout" style="margin-top:${hasCheckoutApi() ? '10' : '20'}px">
@@ -172,7 +172,7 @@ function renderCartPage() {
 function checkoutMessage() {
   const t = totals();
   const lines = Store.detailed().map(
-    (l) => `• ${l.qty}x ${l.product.name} (${l.product.brand}) — tam. ${l.size}, ${l.color} — ${brl(l.lineTotal)}`
+    (l) => `• ${l.qty}x ${l.product.name} (${l.product.brand}), tam. ${l.size}, ${l.color}, ${brl(l.lineTotal)}`
   );
   return [
     `Olá! Quero finalizar meu pedido na ${CONFIG.brand} ${CONFIG.brandLine}:`,
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       Cart.coupon = code;
-      toast(`Cupom ${code} aplicado — ${COUPONS[code].label}`);
+      toast(`Cupom ${code} aplicado, ${COUPONS[code].label}`);
       renderCartPage();
       return;
     }

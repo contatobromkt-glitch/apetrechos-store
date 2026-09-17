@@ -1,5 +1,5 @@
 /* =========================================================================
-   Apetrechos Calçados — DEMONSTRAÇÃO do atendente de WhatsApp
+   Apetrechos Calçados, DEMONSTRAÇÃO do atendente de WhatsApp
    -------------------------------------------------------------------------
    Widget de demonstracao (sem back-end, sem chave, sem numero conectado).
    Simula, dentro do proprio site, como sera a conversa com o agente de
@@ -8,7 +8,7 @@
    system prompt do agente: acolhedor, uma pergunta de cada vez, conduzindo
    para a venda e sem inventar dado que nao tem.
 
-   Ao ir para producao, este arquivo pode ser removido — quem responde passa
+   Ao ir para producao, este arquivo pode ser removido, quem responde passa
    a ser o back-end de verdade (pasta apetrechos-whatsapp-agent).
    ========================================================================= */
 (function () {
@@ -177,7 +177,7 @@
 
   function listaProdutos(items) {
     return items.slice(0, 3).map(
-      (p) => `• *${p.name}* — ${money(p.price)} _(no Pix ${pixOf(p.price)})_`
+      (p) => `• *${p.name}*, ${money(p.price)} _(no Pix ${pixOf(p.price)})_`
     ).join('\n');
   }
 
@@ -244,9 +244,9 @@
       return {
         text:
           'Você pode pagar assim 💳\n\n' +
-          '• *Pix* — 10% de desconto na hora\n' +
-          `• *Cartão* — em até ${cfg.installments || 10}x sem juros\n` +
-          '• *Boleto* — à vista\n\n' +
+          '• *Pix*, 10% de desconto na hora\n' +
+          `• *Cartão*, em até ${cfg.installments || 10}x sem juros\n` +
+          '• *Boleto*, à vista\n\n' +
           'Quer que eu calcule o valor de algum modelo no Pix?',
         chips: ['Ver tênis', 'Calcular frete', 'Quero fechar pedido'],
       };

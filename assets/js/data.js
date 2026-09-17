@@ -1,5 +1,5 @@
 /* =========================================================================
-   Apetrechos Calçados — Catálogo
+   Apetrechos Calçados, Catálogo
    Fonte única de dados da vitrine. Substituir por API quando houver back-end.
    ========================================================================= */
 
@@ -15,7 +15,7 @@ const CONFIG = {
   // LGPD
   privacyUrl: 'privacy.html',
   dpo: 'privacidade@apetrechos.com.br', // Encarregado de Dados (trocar pelo real)
-  cnpj: '', // CNPJ real da loja — vazio esconde do rodapé até ser informado
+  cnpj: '', // CNPJ real da loja, vazio esconde do rodapé até ser informado
   // Back-end de checkout (frete Melhor Envio + pagamento PagBank).
   // Vazio = pagamento online desligado; o site usa só o WhatsApp.
   // Em produção, aponte para a URL do serviço apetrechos-checkout.
@@ -73,7 +73,7 @@ function p(id, name, brand, category, price, oldPrice, colors, sizes, opts = {})
     material: opts.material || 'Couro sintético de alta durabilidade',
     description:
       opts.description ||
-      `${name} da linha ${brand}. Modelagem estudada para uso prolongado, com palmilha macia e acabamento impecável — o tipo de calçado que combina com o dia inteiro.`,
+      `${name} da linha ${brand}. Modelagem estudada para uso prolongado, com palmilha macia e acabamento impecável, o tipo de calçado que combina com o dia inteiro.`,
   };
 }
 

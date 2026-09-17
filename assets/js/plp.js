@@ -1,5 +1,5 @@
 /* =========================================================================
-   PLP — vitrine com filtros, ordenação e paginação incremental
+   PLP, vitrine com filtros, ordenação e paginação incremental
    ========================================================================= */
 
 const PAGE_SIZE = 8;
@@ -175,7 +175,7 @@ function renderHeadings(total) {
   document.getElementById('plp-title').textContent = title;
   document.getElementById('plp-count').textContent =
     `${total} ${total === 1 ? 'produto encontrado' : 'produtos encontrados'}`;
-  document.title = `${title} — Apetrechos Calçados`;
+  document.title = `${title}, Apetrechos Calçados`;
 
   document.getElementById('breadcrumb').innerHTML = `
     <a href="index.html">Início</a>${icon('chevronRight')}
@@ -218,7 +218,7 @@ function renderGrid() {
       <div class="empty-state" style="grid-column:1/-1">
         ${icon('search', 'icon icon-lg')}
         <h3>Nenhum par com essa combinação</h3>
-        <p>Tente soltar um filtro — a numeração e a cor costumam ser as mais restritivas.</p>
+        <p>Tente soltar um filtro, a numeração e a cor costumam ser as mais restritivas.</p>
         <button class="btn btn-ink" type="button" data-f="clear">Limpar filtros</button>
       </div>`;
     more.innerHTML = '';

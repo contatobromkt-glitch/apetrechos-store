@@ -1,12 +1,12 @@
 /* =========================================================================
-   Home — hero, categorias, vitrines e newsletter
+   Home, hero, categorias, vitrines e newsletter
    ========================================================================= */
 
 const HERO = [
   {
     eyebrow: 'Bem-vinda à Apetrechos',
     title: 'O par certo <em>combina</em> com o seu dia',
-    text: 'Calçados femininos, masculinos e infantis das marcas que você conhece — Vizzano, Pegada, Mississipi e mais. Conforto e estilo para a família toda.',
+    text: 'Calçados femininos, masculinos e infantis das marcas que você conhece, Vizzano, Pegada, Mississipi e mais. Conforto e estilo para a família toda.',
     ctaLabel: 'Ver a loja',
     ctaHref: 'categoria.html',
     altLabel: 'Ver saltos',
@@ -18,7 +18,7 @@ const HERO = [
   {
     eyebrow: 'Para os pequenos',
     title: 'Do <em>recreio</em> ao passeio',
-    text: 'Tênis e sandálias infantis leves e resistentes — do Sonic ao esportivo. Numeração do 25 ao 33.',
+    text: 'Tênis e sandálias infantis leves e resistentes, do Sonic ao esportivo. Numeração do 25 ao 33.',
     ctaLabel: 'Ver infantil',
     ctaHref: 'categoria.html?c=infantil',
     altLabel: 'Ver tênis',
@@ -52,6 +52,7 @@ const BENEFITS = [
 function renderHero() {
   const slidesEl = document.getElementById('hero-slides');
   const dotsEl = document.getElementById('hero-dots');
+  if (!slidesEl || !dotsEl) return; // o hero virou vídeo, não há carrossel
 
   slidesEl.innerHTML = HERO.map((s, i) => {
     const product = Catalog.byId(s.productId);
@@ -115,7 +116,9 @@ function renderBenefits() {
 }
 
 function renderCategories() {
-  document.getElementById('cat-scroller').innerHTML = CATEGORIES.map((c) => `
+  const scroller = document.getElementById('cat-scroller');
+  if (!scroller) return; // seção "Navegue por categoria" removida
+  scroller.innerHTML = CATEGORIES.map((c) => `
     <a class="cat-tile" href="${categoryUrl(c.slug)}">
       <img src="${categoryImage(c)}" alt="" width="320" height="320" loading="lazy">
       <span>${c.name}</span>

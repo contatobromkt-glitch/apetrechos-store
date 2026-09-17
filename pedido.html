@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Seu pedido — Apetrechos Calçados</title>
+  <title>Seu pedido, Apetrechos Calçados</title>
   <meta name="description" content="Acompanhe o status do seu pedido na Apetrechos Calçados.">
   <meta name="theme-color" content="#FF66C4">
   <meta name="robots" content="noindex">
@@ -50,7 +50,7 @@
       document.getElementById('order-wa').href = 'https://wa.me/' + CONFIG.whatsapp;
       if (ref) refEl.textContent = 'Código do pedido: ' + ref;
 
-      // O pedido foi criado no servidor — esvazia a sacola para não duplicar.
+      // O pedido foi criado no servidor, esvazia a sacola para não duplicar.
       try { Store.clear(); localStorage.removeItem('apx.coupon.v1'); } catch (e) {}
 
       var api = (CONFIG.checkoutApi || '').replace(/\/$/, '');

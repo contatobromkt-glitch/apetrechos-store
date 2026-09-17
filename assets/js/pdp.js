@@ -1,5 +1,5 @@
 /* =========================================================================
-   PDP — galeria, seleção de cor/numeração, frete e adição à sacola
+   PDP, galeria, seleção de cor/numeração, frete e adição à sacola
    ========================================================================= */
 
 const PDP = { product: null, color: null, size: null, image: 0 };
@@ -26,7 +26,7 @@ function renderPdp() {
   const wished = Store.isWished(p.id);
   const pixPrice = p.price * (1 - CONFIG.pixDiscount);
 
-  document.title = `${p.name} — ${p.brand} | Apetrechos Calçados`;
+  document.title = `${p.name}, ${p.brand} | Apetrechos Calçados`;
   document.getElementById('breadcrumb').innerHTML = `
     <a href="index.html">Início</a>${icon('chevronRight')}
     <a href="${categoryUrl(p.category)}">${p.categoryName}</a>${icon('chevronRight')}
@@ -233,7 +233,7 @@ function bindPdp() {
         input.focus();
         return;
       }
-      // Estimativa local — trocar por integração com a transportadora.
+      // Estimativa local, trocar por integração com a transportadora.
       const base = Number(raw.slice(0, 1));
       const days = 2 + base;
       const price = PDP.product.price >= CONFIG.freeShipping ? 0 : 18.9 + base * 2.4;

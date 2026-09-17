@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apetrechos Calçados — Conforto e estilo em um só lugar</title>
+  <title>Apetrechos Calçados, Conforto e estilo em um só lugar</title>
   <meta name="description" content="Loja online de calçados femininos, masculinos e infantis: tênis, sapatênis, saltos, sandálias e rasteiras das melhores marcas. Frete grátis acima de R$ 249,90 e até 10x sem juros.">
   <meta name="theme-color" content="#FF66C4">
   <link rel="icon" href="assets/img/favicon.png">
@@ -17,12 +17,21 @@
   <div id="header"></div>
 
   <main id="main">
-    <!-- Hero ------------------------------------------------------------->
-    <section class="hero" aria-label="Destaques da coleção">
-      <div class="container">
-        <div class="hero-slides" id="hero-slides"></div>
+    <!-- Hero (vídeo) ----------------------------------------------------->
+    <section class="hero-video" aria-label="Apetrechos Calçados">
+      <video class="hero-video-media" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="assets/video/hero-apetrechos.webm" type="video/webm">
+      </video>
+      <div class="hero-video-scrim"></div>
+      <div class="container hero-video-content">
+        <p class="hero-eyebrow">Apetrechos Calçados</p>
+        <h1 class="hero-title">O par certo combina com o seu dia</h1>
+        <p class="hero-text">Calçados femininos, masculinos e infantis das melhores marcas, com frete para todo o Brasil.</p>
+        <div class="hero-cta">
+          <a class="btn btn-lg" href="categoria.html">Ver a loja</a>
+          <a class="btn btn-outline btn-lg" href="categoria.html?c=saltos">Ver saltos</a>
+        </div>
       </div>
-      <div class="hero-dots" id="hero-dots" role="tablist" aria-label="Escolher destaque"></div>
     </section>
 
     <!-- Benefícios -------------------------------------------------------->
@@ -30,18 +39,6 @@
       <div class="container">
         <div class="benefits-grid" id="benefits"></div>
       </div>
-    </section>
-
-    <!-- Categorias -------------------------------------------------------->
-    <section class="section container">
-      <div class="section-head">
-        <div>
-          <p class="section-eyebrow">Comece por aqui</p>
-          <h2 class="section-title">Navegue por categoria</h2>
-        </div>
-        <a class="section-link" href="categoria.html">Ver tudo</a>
-      </div>
-      <div class="cat-scroller" id="cat-scroller"></div>
     </section>
 
     <!-- Atalho por tamanho ------------------------------------------------->
@@ -82,7 +79,7 @@
           <div>
             <p class="section-eyebrow" style="color:rgba(255,255,255,.7)">Para eles</p>
             <h3>Sapatênis de couro</h3>
-            <p>Pegada e Strike com couro legítimo e solado confortável — do trabalho ao fim de semana.</p>
+            <p>Pegada e Strike com couro legítimo e solado confortável, do trabalho ao fim de semana.</p>
             <a class="btn btn-ink" href="categoria.html?c=sapatenis">Ver sapatênis</a>
           </div>
         </article>
@@ -109,7 +106,7 @@
             <p class="section-eyebrow">Lista vip</p>
             <h2 class="section-title">10% off na primeira compra</h2>
             <p class="text-muted" style="margin-top:12px;max-width:46ch">
-              Receba primeiro os lançamentos e as reposições de numeração. Sem spam — no máximo duas mensagens por mês.
+              Receba primeiro os lançamentos e as reposições de numeração. Sem spam, no máximo duas mensagens por mês.
             </p>
           </div>
           <form class="form-row" id="news-form" novalidate>

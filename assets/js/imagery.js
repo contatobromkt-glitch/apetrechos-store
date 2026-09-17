@@ -1,5 +1,5 @@
 /* =========================================================================
-   Apetrechos Calçados — Imagery
+   Apetrechos Calçados, Imagery
    Gera as imagens de produto como SVG inline (data URI). Enquanto a loja não
    tem banco de fotos, isso mantém a vitrine consistente e 100% offline.
    Para trocar por fotos reais: dar a cada produto um campo `photos: []` e
@@ -50,7 +50,7 @@ const GLYPHS = {
  * @param {number} variant   0 = frente, 1 = alternativa (usada no hover)
  * @param {object} opts      { w, h, tint }
  */
-/* Fundos pastel da marca (blush, lilás, azul dusty) — dão coesão ao grid
+/* Fundos pastel da marca (blush, lilás, azul dusty), dão coesão ao grid
    com a identidade pink+azul, independente da cor do calçado. */
 const BRAND_BGS = [
   ['#FFF0F8', '#FBD9EC'], // blush
