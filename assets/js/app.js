@@ -549,11 +549,12 @@ function bindReveal() {
     if (!el.classList.contains('reveal')) el.classList.add('reveal');
   });
 
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const items = Array.from(document.querySelectorAll('.reveal')).filter((el) => !el.dataset.mv);
   if (!items.length) return;
 
-  if (reduce || !('IntersectionObserver' in window)) {
+  // Movimento no scroll fica ativo sempre (pedido do lojista). Só cai no
+  // fallback "mostrar tudo" se o navegador não tiver IntersectionObserver.
+  if (!('IntersectionObserver' in window)) {
     items.forEach((el) => { el.classList.add('is-in'); el.dataset.mv = '1'; });
     return;
   }

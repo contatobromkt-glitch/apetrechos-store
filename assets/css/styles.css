@@ -778,7 +778,7 @@ input[type='range'] { flex: 1; accent-color: var(--primary); height: 28px; }
 @keyframes toast-out { to { opacity: 0; transform: translateY(8px); } }
 
 /* ------------------------------------------------------------------ 16. Utilitários */
-.reveal { opacity: 0; transform: translateY(22px);
+.reveal { opacity: 0; transform: translateY(30px);
   transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
   will-change: opacity, transform; }
 .reveal.is-in { opacity: 1; transform: none; }
@@ -821,5 +821,11 @@ input[type='range'] { flex: 1; accent-color: var(--primary); height: 28px; }
     animation-duration: .01ms !important; animation-iteration-count: 1 !important;
     transition-duration: .01ms !important; scroll-behavior: auto !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  /* O movimento de scroll é mantido a pedido do lojista, mesmo com "reduzir
+     movimento" — é suave (só translate + fade). Restaura a transição do
+     .reveal que o reset acima zera. */
+  .reveal {
+    transition-duration: var(--dur-slow) !important;
+    transition-property: opacity, transform !important;
+  }
 }
