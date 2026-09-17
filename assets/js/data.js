@@ -8,7 +8,7 @@ const CONFIG = {
   brandLine: 'Calçados',
   tagline: 'Conforto e estilo em um só lugar',
   instagram: 'https://www.instagram.com/loja.apetrechos/',
-  whatsapp: '5511999999999', // trocar pelo número real da loja
+  whatsapp: '5527992968656', // número real da loja (Apetrechos)
   freeShipping: 249.9,
   installments: 10,
   pixDiscount: 0.1,
@@ -90,18 +90,6 @@ const PRODUCTS = [
     { stock: 6, photos: ['assets/img/products/box200-preto.jpg'],
       material: 'Cabedal têxtil respirável com solado em EVA',
       description: 'Tênis esportivo todo preto, leve e respirável, com solado em EVA que amortece a passada. Ideal para corrida, caminhada e o dia a dia.' }),
-  /* ⏸️ AGUARDANDO PREÇO da loja — reativar quando confirmado (fotos já em assets/img/products):
-  p('t02', 'Tênis Box 200 Gelo', 'Box 200', 'tenis', 0, null,
-    ['gelo'], [34, 35, 38, 39, 41, 42, 43, 44],
-    { stock: 9, photos: ['assets/img/products/box200-gelo.jpg'],
-      material: 'Cabedal têxtil respirável com solado em EVA',
-      description: 'Tênis esportivo cinza-gelo com detalhes em preto e entressola branca. Conforto e leveza para treinar ou passear.' }),
-  p('t03', 'Tênis Box 200 Preto e Dourado', 'Box 200', 'tenis', 0, null,
-    ['preto'], [47, 49],
-    { stock: 2, photos: ['assets/img/products/box200-preto-dourado.jpg'],
-      material: 'Cabedal têxtil respirável com solado em EVA',
-      description: 'Tênis esportivo preto com detalhes dourados e solado emborrachado com aderência. Visual esportivo com um toque de sofisticação.' }),
-  */
 
   // ---- Sapatênis ---------------------------------------------------------
   p('sp01', 'Sapatênis Pegada Levitech Branco', 'Pegada', 'sapatenis', 149.95, 329.95,
