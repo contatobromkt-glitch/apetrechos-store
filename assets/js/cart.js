@@ -12,9 +12,97 @@ function shippingCost(subtotal) {
   return subtotal >= CONFIG.freeShipping ? 0 : 24.9;
 }
 
-/* Estado do frete calculado (Melhor Envio via back-end). Não persiste. */
-const ShippingState = { cep: '', options: [], selected: null, loading: false, error: '' };
+/* Estado do frete calculado (back-end) e dos dados de entrega. Não persiste. */
+const ShippingState = {
+  cep: '', options: [], selected: null, loading: false, error: '',
+  address: { name: '', phone: '', street: '', number: '', complement: '', district: '', city: '', uf: '' },
+  addrCep: '',   // CEP que já preencheu rua/bairro/cidade (evita sobrescrever o que o cliente digitou)
+  addrError: '',
+  invalid: [],   // campos com erro
+  cepWarning: '',
+};
 const hasCheckoutApi = () => !!(CONFIG.checkoutApi && CONFIG.checkoutApi.trim());
+const escAttr = (s) => String(s == null ? '' : s)
+  .replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+
+/* Campos do endereço de entrega: [chave, rótulo, atributos extras, classe do grid, obrigatório]. */
+const ADDR_FIELDS = [
+  ['name', 'Nome completo', 'autocomplete="name" maxlength="120"', 'span-6', true],
+  ['phone', 'Celular (WhatsApp)', 'type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(27) 99999-9999" maxlength="15"', 'span-6', true],
+  ['street', 'Rua / Avenida', 'autocomplete="address-line1" maxlength="160"', 'span-6', true],
+  ['number', 'Número', 'inputmode="numeric" autocomplete="off" maxlength="20"', 'span-2', true],
+  ['complement', 'Complemento', 'autocomplete="address-line2" placeholder="Apto, bloco" maxlength="80"', 'span-4', false],
+  ['district', 'Bairro', 'autocomplete="address-level3" maxlength="120"', 'span-6', true],
+  ['city', 'Cidade', 'autocomplete="address-level2" maxlength="120"', 'span-4', true],
+  ['uf', 'UF', 'autocomplete="address-level1" maxlength="2" style="text-transform:uppercase"', 'span-2', true],
+];
+
+function addressFormMarkup() {
+  const a = ShippingState.address;
+  return `
+    <fieldset class="addr-form" aria-describedby="addr-error">
+      <legend class="opt-label">Dados para entrega</legend>
+      <div class="addr-grid">
+        ${ADDR_FIELDS.map(([key, label, attrs, span, req]) => {
+          const bad = ShippingState.invalid.includes(key);
+          return `
+          <div class="field ${span}${bad ? ' has-error' : ''}">
+            <label for="addr-${key}">${label}${req ? '' : ' <span class="text-muted">(opcional)</span>'}</label>
+            <input id="addr-${key}" data-addr="${key}" value="${escAttr(a[key])}" ${attrs}
+                   ${req ? 'required aria-required="true"' : ''} ${bad ? 'aria-invalid="true"' : ''}>
+          </div>`;
+        }).join('')}
+      </div>
+      <p class="err" id="addr-error" role="alert" ${ShippingState.addrError ? '' : 'hidden'}>
+        ${ShippingState.addrError ? `${icon('alert', 'icon icon-sm')} ${ShippingState.addrError}` : ''}
+      </p>
+    </fieldset>`;
+}
+
+function hideAddrError() {
+  const el = document.getElementById('addr-error');
+  if (el) { el.hidden = true; el.innerHTML = ''; }
+}
+
+function maskPhone(value) {
+  const d = String(value).replace(/\D/g, '').slice(0, 11);
+  if (d.length <= 2) return d.length ? `(${d}` : '';
+  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+}
+
+/* Valida os dados de entrega. Devolve a lista de campos com problema. */
+function validateAddress() {
+  const a = ShippingState.address;
+  const invalid = ADDR_FIELDS.filter(([key, , , , req]) => req && !String(a[key]).trim()).map(([key]) => key);
+  const phoneDigits = a.phone.replace(/\D/g, '');
+  if (a.phone && (phoneDigits.length < 10 || phoneDigits.length > 11) && !invalid.includes('phone')) invalid.push('phone');
+  if (a.uf && !/^[A-Za-z]{2}$/.test(a.uf.trim()) && !invalid.includes('uf')) invalid.push('uf');
+  return invalid;
+}
+
+/* Preenche rua/bairro/cidade/UF pelo CEP (ViaCEP). Só sobrescreve quando o CEP mudou. */
+async function autofillAddress(cep) {
+  ShippingState.cepWarning = '';
+  if (!cep || cep === ShippingState.addrCep) return;
+  try {
+    const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    if (!res.ok) return;
+    const d = await res.json();
+    if (d.erro) {
+      ShippingState.cepWarning = 'Não encontramos esse CEP nos Correios. Confira o número antes de pagar.';
+      return;
+    }
+    Object.assign(ShippingState.address, {
+      street: d.logradouro || '',
+      district: d.bairro || '',
+      city: d.localidade || '',
+      uf: d.uf || '',
+    });
+    ShippingState.addrCep = cep;
+  } catch { /* sem autopreenchimento: o cliente digita */ }
+}
 
 function totals() {
   const subtotal = Store.subtotal;
@@ -139,6 +227,7 @@ function renderCartPage() {
         </button>
       </div>
       ${ShippingState.error ? `<p class="err" role="alert" style="margin-top:8px">${icon('alert', 'icon icon-sm')} ${ShippingState.error}</p>` : ''}
+      ${!ShippingState.error && ShippingState.cepWarning ? `<p class="err" role="status" style="margin-top:8px">${icon('alert', 'icon icon-sm')} ${ShippingState.cepWarning}</p>` : ''}
       ${ShippingState.options.length ? `
         <div role="radiogroup" aria-label="Opções de frete" style="display:flex;flex-direction:column;gap:6px;margin-top:12px">
           ${ShippingState.options.map((o) => `
@@ -151,6 +240,7 @@ function renderCartPage() {
             </label>`).join('')}
         </div>` : ''}
       ${ShippingState.selected ? `
+        ${addressFormMarkup()}
         <button class="btn btn-block btn-lg" type="button" id="pay-online" style="margin-top:12px">
           ${icon('card')} Pagar com PagBank
         </button>
@@ -183,7 +273,22 @@ function checkoutMessage() {
     t.discount ? `Cupom ${t.coupon}: -${brl(t.discount)}` : null,
     `Frete: ${t.shipping === 0 ? 'grátis' : brl(t.shipping)}`,
     `Total: ${brl(t.total)}`,
+    ...addressLinesForMessage(),
   ].filter(Boolean).join('\n');
+}
+
+/* Se o cliente já preencheu o endereço na sacola, manda junto no WhatsApp. */
+function addressLinesForMessage() {
+  const a = ShippingState.address;
+  if (!a.street.trim()) return [];
+  return [
+    '',
+    'Entrega:',
+    a.name.trim() || null,
+    `${a.street.trim()}, ${a.number.trim() || 's/n'}${a.complement.trim() ? ` - ${a.complement.trim()}` : ''}`,
+    [a.district.trim(), [a.city.trim(), a.uf.trim().toUpperCase()].filter(Boolean).join('/')].filter(Boolean).join(', '),
+    ShippingState.cep ? `CEP ${ShippingState.cep}` : null,
+  ];
 }
 
 /* ------------------------------------------------------------ Frete/pagamento */
@@ -202,15 +307,20 @@ async function quoteShipping() {
   Object.assign(ShippingState, { loading: true, error: '', options: [], selected: null });
   renderCartPage();
   try {
-    const items = Store.cart.map((i) => ({ id: i.id, qty: i.qty }));
-    const res = await fetch(`${apiBase()}/shipping/quote`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cep, items }),
-    });
+    const items = Store.detailed().map((l) => ({ id: l.id, qty: l.qty }));
+    const [res] = await Promise.all([
+      fetch(`${apiBase()}/shipping/quote`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cep, items }),
+      }),
+      autofillAddress(cep), // em paralelo: já deixa rua/bairro/cidade prontos
+    ]);
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Não foi possível calcular o frete.');
     ShippingState.options = data.options || [];
     if (!ShippingState.options.length) ShippingState.error = 'Nenhuma opção de frete para esse CEP.';
+    // Com uma opção só, já deixa escolhida (menos um clique).
+    if (ShippingState.options.length === 1) ShippingState.selected = ShippingState.options[0];
   } catch (err) {
     ShippingState.error = err.message || 'Erro ao calcular o frete. Tente novamente.';
   } finally {
@@ -222,13 +332,36 @@ async function quoteShipping() {
 async function payOnline(btn) {
   if (!ShippingState.selected) return;
   const cep = ShippingState.cep.replace(/\D/g, '');
+
+  // Endereço completo é obrigatório: é com ele que a loja gera a etiqueta.
+  const invalid = validateAddress();
+  if (invalid.length) {
+    ShippingState.invalid = invalid;
+    ShippingState.addrError = invalid.length === 1 && invalid[0] === 'phone'
+      ? 'Confira o celular: informe DDD + número.'
+      : 'Preencha os campos destacados para enviarmos o seu pedido.';
+    renderCartPage();
+    document.getElementById(`addr-${invalid[0]}`)?.focus();
+    return;
+  }
+  ShippingState.invalid = [];
+  ShippingState.addrError = '';
+  hideAddrError();
+
+  const a = ShippingState.address;
+  const customer = { name: a.name.trim(), phone: a.phone.trim() };
+  const address = {
+    street: a.street.trim(), number: a.number.trim(), complement: a.complement.trim(),
+    district: a.district.trim(), city: a.city.trim(), uf: a.uf.trim().toUpperCase(),
+  };
+
   btn.disabled = true;
   btn.innerHTML = `${icon('card')} Redirecionando…`;
   try {
-    const items = Store.cart.map((i) => ({ id: i.id, qty: i.qty }));
+    const items = Store.detailed().map((l) => ({ id: l.id, qty: l.qty, size: l.size, color: l.color }));
     const res = await fetch(`${apiBase()}/checkout`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items, cep, shippingServiceId: ShippingState.selected.serviceId }),
+      body: JSON.stringify({ items, cep, shippingServiceId: ShippingState.selected.serviceId, customer, address }),
     });
     const data = await res.json();
     if (!res.ok || !data.payUrl) throw new Error(data.error || 'Não foi possível iniciar o pagamento.');
@@ -252,6 +385,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const v = e.target.value.replace(/\D/g, '').slice(0, 8);
       e.target.value = v.length > 5 ? `${v.slice(0, 5)}-${v.slice(5)}` : v;
       ShippingState.cep = e.target.value;
+      return;
+    }
+    // Dados de entrega: guarda no estado sem re-renderizar (não perde o foco).
+    const key = e.target.dataset && e.target.dataset.addr;
+    if (key) {
+      if (key === 'phone') e.target.value = maskPhone(e.target.value);
+      if (key === 'uf') e.target.value = e.target.value.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
+      ShippingState.address[key] = e.target.value;
+      if (ShippingState.invalid.includes(key)) {
+        ShippingState.invalid = ShippingState.invalid.filter((k) => k !== key);
+        const field = e.target.closest('.field');
+        field?.classList.remove('has-error');
+        e.target.removeAttribute('aria-invalid');
+        if (!ShippingState.invalid.length) { ShippingState.addrError = ''; hideAddrError(); }
+      }
     }
   });
 

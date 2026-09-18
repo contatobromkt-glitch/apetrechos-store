@@ -23,7 +23,6 @@ const CONFIG = {
 };
 
 const CATEGORIES = [
-  { slug: 'tenis',      name: 'Tênis',      glyph: 'sneaker', bg: ['#F6EDF1', '#EBDDE4'] },
   { slug: 'sapatenis',  name: 'Sapatênis',  glyph: 'sneaker', bg: ['#EFEBE6', '#E2DBD2'] },
   { slug: 'saltos',     name: 'Saltos',     glyph: 'sandal',  bg: ['#F4EAEE', '#E8D6DE'] },
   { slug: 'sandalias',  name: 'Sandálias',  glyph: 'sandal',  bg: ['#F7EFE6', '#EEE0CE'] },
@@ -84,13 +83,6 @@ function p(id, name, brand, category, price, oldPrice, colors, sizes, opts = {})
    ⚠️ Itens marcados PREÇO PROVISÓRIO ainda precisam do valor real da loja.
    -------------------------------------------------------------------------- */
 const PRODUCTS = [
-  // ---- Tênis (Box 200) ---------------------------------------------------
-  p('t01', 'Tênis Box 200 Preto', 'Box 200', 'tenis', 50.0, null,
-    ['preto'], [34, 39, 40, 41],
-    { stock: 6, photos: ['assets/img/products/box200-preto.jpg?v=2'],
-      material: 'Cabedal têxtil respirável com solado em EVA',
-      description: 'Tênis esportivo todo preto, leve e respirável, com solado em EVA que amortece a passada. Ideal para corrida, caminhada e o dia a dia.' }),
-
   // ---- Sapatênis ---------------------------------------------------------
   p('sp01', 'Sapatênis Pegada Levitech Branco', 'Pegada', 'sapatenis', 149.95, 329.95,
     ['branco'], [39, 40],

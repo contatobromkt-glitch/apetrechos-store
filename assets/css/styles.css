@@ -588,6 +588,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .form-row { display: grid; gap: var(--sp-3); grid-template-columns: 1fr; }
 @media (min-width: 560px) { .form-row { grid-template-columns: 1fr auto; align-items: end; } }
 
+/* Dados de entrega (sacola) */
+.addr-form { border: 0; padding: 0; margin: var(--sp-4) 0 0; min-width: 0; }
+.addr-form legend { padding: 0; margin-bottom: var(--sp-3); }
+.addr-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--sp-3); }
+.addr-grid .field { min-width: 0; }
+.addr-grid .field input { width: 100%; min-width: 0; font-size: 16px; } /* 16px evita zoom no iPhone */
+.addr-grid .span-6 { grid-column: span 6; }
+.addr-grid .span-4 { grid-column: span 4; }
+.addr-grid .span-2 { grid-column: span 2; }
+.addr-grid .field label .text-muted { font-weight: 400; font-size: var(--fs-xs); }
+.addr-form #addr-error { margin-top: var(--sp-3); }
+
 /* ------------------------------------------------------------------ 11. Rodapé */
 .site-footer { background: var(--fg); color: var(--bg); padding-top: var(--sp-8); margin-top: var(--sp-8); }
 [data-theme='dark'] .site-footer { background: var(--surface); color: var(--fg); }

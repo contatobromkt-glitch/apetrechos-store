@@ -21,8 +21,8 @@ const HERO = [
     text: 'Tênis e sandálias infantis leves e resistentes, do Sonic ao esportivo. Numeração do 25 ao 33.',
     ctaLabel: 'Ver infantil',
     ctaHref: 'categoria.html?c=infantil',
-    altLabel: 'Ver tênis',
-    altHref: 'categoria.html?c=tenis',
+    altLabel: 'Ver sapatênis',
+    altHref: 'categoria.html?c=sapatenis',
     productId: 'k06',
     tagKey: 'Infantil',
     tagValue: 'do 25 ao 33',
@@ -33,8 +33,8 @@ const HERO = [
     text: 'Pegada e Strike com acabamento em couro e solado confortável. Do trabalho ao fim de semana.',
     ctaLabel: 'Ver sapatênis',
     ctaHref: 'categoria.html?c=sapatenis',
-    altLabel: 'Ver tênis',
-    altHref: 'categoria.html?c=tenis',
+    altLabel: 'Ver sapatênis',
+    altHref: 'categoria.html?c=sapatenis',
     productId: 'sp02',
     tagKey: 'Pegada',
     tagValue: 'couro legítimo',
@@ -133,7 +133,7 @@ function renderSizeShortcut() {
 function renderRails() {
   // Loja nova: sem "mais vendidos" reais ainda. Vitrine 1 = destaques adultos,
   // vitrine 2 = infantil.
-  const destaques = ['h02', 'sp01', 'r01', 't01'].map((id) => Catalog.byId(id)).filter(Boolean);
+  const destaques = ['h02', 'sp01', 'r01', 's01'].map((id) => Catalog.byId(id)).filter(Boolean);
   const kids = Catalog.byCategory('infantil').slice(0, 4);
   document.getElementById('rail-new').innerHTML = destaques.map((p) => productCard(p, { reveal: true })).join('');
   document.getElementById('rail-best').innerHTML = kids.map((p) => productCard(p, { reveal: true })).join('');

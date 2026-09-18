@@ -163,15 +163,15 @@
 
   // ---- Base de respostas do agente (fluxo de atendimento) -----------------
   const CAT_KEYS = {
-    tenis: ['tenis', 'tênis', 'tenies', 'box', 'corrida', 'running', 'esporte'],
-    sapatenis: ['sapatenis', 'sapatênis', 'pegada', 'strike', 'masculino'],
+    // Infantil primeiro: "tênis infantil" deve cair aqui, não em sapatênis.
+    infantil: ['infantil', 'crianca', 'criança', 'kids', 'menino', 'menina', 'sonic', 'ollie', 'box'],
+    sapatenis: ['sapatenis', 'sapatênis', 'pegada', 'strike', 'masculino', 'tenis', 'tênis', 'tenies'],
     saltos: ['salto', 'saltos', 'scarpin', 'meia pata', 'vizzano', 'mariotta', 'festa'],
     sandalias: ['sandalia', 'sandália', 'sandalias', 'tamanco', 'flatform'],
     rasteiras: ['rasteira', 'rasteiras', 'rasteirinha', 'mississipi'],
-    infantil: ['infantil', 'crianca', 'criança', 'kids', 'menino', 'menina', 'sonic', 'ollie'],
   };
   const CAT_LABEL = {
-    tenis: 'tênis', sapatenis: 'sapatênis', saltos: 'saltos',
+    sapatenis: 'sapatênis', saltos: 'saltos',
     sandalias: 'sandálias', rasteiras: 'rasteiras', infantil: 'calçados infantis',
   };
 
@@ -188,7 +188,7 @@
     if (!items.length) {
       return {
         text: 'Esse tipo eu vou confirmar pra você certinho com a loja pra não te passar informação errada 😊 Enquanto isso, quer ver os mais vendidos?',
-        chips: ['Ver tênis', 'Ver infantil', 'Ver sandálias'],
+        chips: ['Ver sapatênis', 'Ver infantil', 'Ver sandálias'],
       };
     }
     return {
@@ -248,7 +248,7 @@
           `• *Cartão*, em até ${cfg.installments || 10}x sem juros\n` +
           '• *Boleto*, à vista\n\n' +
           'Quer que eu calcule o valor de algum modelo no Pix?',
-        chips: ['Ver tênis', 'Calcular frete', 'Quero fechar pedido'],
+        chips: ['Ver sapatênis', 'Calcular frete', 'Quero fechar pedido'],
       };
     }
 
@@ -260,7 +260,7 @@
           `• *Frete grátis* nas compras acima de ${money(cfg.freeShipping || 249.9)}\n` +
           '• Abaixo disso, o valor depende do seu CEP\n\n' +
           'Me passa seu CEP que eu calculo o frete e o prazo certinho pra sua região 😉',
-        chips: ['Ver tênis', 'Formas de pagamento', 'Falar com atendente'],
+        chips: ['Ver sapatênis', 'Formas de pagamento', 'Falar com atendente'],
       };
     }
 
@@ -299,7 +299,7 @@
     if (/^(oi|ola|olá|bom dia|boa tarde|boa noite|e ai|opa)/.test(norm)) {
       return {
         text: 'Oi! 😊 Que bom te ver por aqui. Me conta: você procura algum modelo em especial ou quer que eu te mostre os mais vendidos?',
-        chips: ['Ver tênis', 'Ver infantil', 'Ver sandálias'],
+        chips: ['Ver sapatênis', 'Ver infantil', 'Ver sandálias'],
       };
     }
 
@@ -307,7 +307,7 @@
     return {
       text:
         'Deixa eu te ajudar melhor 😊 Posso te mostrar modelos, calcular frete, explicar as formas de pagamento ou te passar pra uma atendente. Sobre qual desses você quer falar?',
-      chips: ['Ver tênis', 'Ver infantil', 'Formas de pagamento', 'Falar com atendente'],
+      chips: ['Ver sapatênis', 'Ver infantil', 'Formas de pagamento', 'Falar com atendente'],
     };
   }
 
@@ -445,7 +445,7 @@
         text:
           'Oi! 👋 Seja bem-vinda à *Apetrechos Calçados*. Eu sou a assistente virtual da loja e te ajudo a escolher o par ideal 😊\n\n' +
           'Como posso te ajudar hoje?',
-        chips: ['Ver tênis', 'Ver infantil', 'Ver sandálias', 'Formas de pagamento', 'Prazo de entrega'],
+        chips: ['Ver sapatênis', 'Ver infantil', 'Ver sandálias', 'Formas de pagamento', 'Prazo de entrega'],
       });
     }
   }
