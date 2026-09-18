@@ -46,7 +46,8 @@ function icon(name, cls = 'icon') {
 
 /* ------------------------------------------------------------------ Formatação */
 const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-const installmentText = (v, n = CONFIG.installments) => `${n}x de ${brl(v / n)} sem juros`;
+// Sem "sem juros": no PagBank as parcelas têm juros pagos pelo cliente.
+const installmentText = (v, n = CONFIG.installments) => `Em até ${n}x no cartão`;
 const productUrl = (id) => `produto.html?id=${id}`;
 const categoryUrl = (slug) => `categoria.html?c=${slug}`;
 
@@ -111,7 +112,8 @@ const Store = {
 };
 
 /* Cupons de demonstração */
-const COUPONS = { APETRECHOS10: { off: 0.1, label: '10% off' }, PRIMEIRACOMPRA: { off: 0.15, label: '15% off' } };
+// Cupons desativados: o pagamento online (PagBank) cobra o valor cheio.
+const COUPONS = {};
 const couponKey = 'apx.coupon.v1';
 
 /* ------------------------------------------------------------------ Toast */
@@ -226,7 +228,7 @@ function renderHeader() {
   <div class="announce">
     <div class="container">
       <span class="announce-item">${icon('truck', 'icon icon-sm')} Frete grátis acima de ${brl(CONFIG.freeShipping)}</span>
-      <span class="announce-item">${icon('card', 'icon icon-sm')} Até ${CONFIG.installments}x sem juros</span>
+      <span class="announce-item">${icon('card', 'icon icon-sm')} Parcele em até ${CONFIG.installments}x no cartão</span>
       <span class="announce-item">${icon('refresh', 'icon icon-sm')} 30 dias para trocar</span>
     </div>
   </div>

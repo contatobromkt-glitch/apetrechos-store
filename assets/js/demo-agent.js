@@ -177,7 +177,7 @@
 
   function listaProdutos(items) {
     return items.slice(0, 3).map(
-      (p) => `• *${p.name}*, ${money(p.price)} _(no Pix ${pixOf(p.price)})_`
+      (p) => `• *${p.name}*, ${money(p.price)}`
     ).join('\n');
   }
 
@@ -195,7 +195,7 @@
       text:
         `Temos opções lindas de ${CAT_LABEL[slug]}! 😍 Alguns queridinhos que estão saindo bastante:\n\n` +
         `${listaProdutos(items)}\n\n` +
-        `Todos em até ${cfg.installments || 10}x sem juros. Qual chamou sua atenção? E qual número você calça?`,
+        `Dá pra parcelar no cartão. Qual chamou sua atenção? E qual número você calça?`,
       chips: ['Calço 36', 'Calço 37', 'Calço 38', 'Falar com atendente'],
     };
   }
@@ -244,10 +244,10 @@
       return {
         text:
           'Você pode pagar assim 💳\n\n' +
-          '• *Pix*, 10% de desconto na hora\n' +
-          `• *Cartão*, em até ${cfg.installments || 10}x sem juros\n` +
+          '• *Pix*, na hora\n' +
+          `• *Cartão*, em até ${cfg.installments || 10}x\n` +
           '• *Boleto*, à vista\n\n' +
-          'Quer que eu calcule o valor de algum modelo no Pix?',
+          'Tudo pela página segura do PagBank. Quer ajuda para escolher um modelo?',
         chips: ['Ver sapatênis', 'Calcular frete', 'Quero fechar pedido'],
       };
     }

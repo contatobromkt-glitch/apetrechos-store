@@ -24,7 +24,6 @@ function renderPdp() {
   const off = discountOf(p);
   const gone = unavailableSizes(p);
   const wished = Store.isWished(p.id);
-  const pixPrice = p.price * (1 - CONFIG.pixDiscount);
 
   document.title = `${p.name}, ${p.brand} | Apetrechos Calçados`;
   document.getElementById('breadcrumb').innerHTML = `
@@ -67,9 +66,7 @@ function renderPdp() {
         ${off > 0 ? `<span class="price-old">${brl(p.oldPrice)}</span>
         <span class="price-off">${off}% off</span>` : ''}
       </div>
-      <p class="card-install" style="margin-top:4px">${installmentText(p.price)}</p>
-      <span class="pdp-pix">${icon('tag', 'icon icon-sm')} ${brl(pixPrice)} no PIX (10% off)</span>
-    </div>
+      <p class="card-install" style="margin-top:4px">${installmentText(p.price)}</p>    </div>
 
     <div class="opt-block">
       <div class="opt-head">

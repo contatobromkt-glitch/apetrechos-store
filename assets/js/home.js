@@ -44,7 +44,7 @@ const HERO = [
 const BENEFITS = [
   ['truck', 'Frete grátis', `Em compras acima de ${brl(CONFIG.freeShipping)}`],
   ['refresh', 'Troca fácil', '30 dias para trocar numeração'],
-  ['card', `Até ${CONFIG.installments}x sem juros`, `Ou 10% off no PIX`],
+  ['card', `Parcele em até ${CONFIG.installments}x`, 'No cartão, ou pague no Pix e boleto'],
   ['shield', 'Compra segura', 'Ambiente protegido e nota fiscal'],
 ];
 
@@ -144,6 +144,7 @@ function bindNewsletter() {
   const form = document.getElementById('news-form');
   const field = document.getElementById('news-field');
   const input = document.getElementById('news-email');
+  if (!form || !field || !input) return; // cadastro por e-mail/cupom removido
 
   const showError = (msg) => {
     field.classList.add('has-error');

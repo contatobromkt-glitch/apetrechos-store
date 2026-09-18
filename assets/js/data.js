@@ -11,7 +11,7 @@ const CONFIG = {
   whatsapp: '5527992968656', // número real da loja (Apetrechos)
   freeShipping: 249.9,
   installments: 10,
-  pixDiscount: 0.1,
+  pixDiscount: 0, // sem desconto no Pix: o PagBank cobra o valor cheio
   // LGPD
   privacyUrl: 'privacy.html',
   dpo: 'privacidade@apetrechos.com.br', // Encarregado de Dados (trocar pelo real)

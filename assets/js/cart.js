@@ -177,24 +177,6 @@ function renderCartPage() {
         <button class="btn btn-ghost" type="button" id="clear-cart" style="color:var(--danger)">Esvaziar sacola</button>
       </div>
     </div>
-
-    <div class="panel">
-      <h2 class="panel-title">Cupom de desconto</h2>
-      ${t.coupon
-        ? `<div class="tag-filter" style="font-size:var(--fs-sm)">
-             ${icon('tag', 'icon icon-sm')} ${t.coupon}, ${COUPONS[t.coupon].label}
-             <button type="button" id="remove-coupon" aria-label="Remover cupom">${icon('close', 'icon icon-sm')}</button>
-           </div>`
-        : `<div class="coupon-row">
-             <div class="field">
-               <label class="sr-only" for="coupon">Código do cupom</label>
-               <input id="coupon" placeholder="Ex.: PRIMEIRACOMPRA" autocomplete="off" aria-describedby="coupon-msg">
-             </div>
-             <button class="btn btn-outline" type="button" id="apply-coupon" style="height:48px">Aplicar</button>
-           </div>
-           <p id="coupon-msg" style="font-size:var(--fs-xs);color:var(--fg-muted);margin-top:8px">
-             Testes: <b>PRIMEIRACOMPRA</b> (15%) ou <b>APETRECHOS10</b> (10%).</p>`}
-    </div>
   </div>
 
   <aside class="panel summary-panel" aria-label="Resumo do pedido">
@@ -211,9 +193,7 @@ function renderCartPage() {
     ${t.discount ? `<div class="summary-row"><span>Cupom ${t.coupon}</span><span style="color:var(--success)">− ${brl(t.discount)}</span></div>` : ''}
     <div class="summary-row"><span>Frete${(ShippingState.selected && !t.freeAbove) ? ` · ${ShippingState.selected.label}` : ''}</span><span>${t.shipping === 0 ? '<span class="free">Grátis</span>' : brl(t.shipping)}</span></div>
     <div class="summary-row is-total"><span>Total</span><span>${brl(t.total)}</span></div>
-    <p class="text-muted" style="font-size:var(--fs-xs);margin:6px 0 4px">${installmentText(t.total)}</p>
-    <p style="font-size:var(--fs-xs);color:var(--success);font-weight:600">
-      ${brl(t.total * (1 - CONFIG.pixDiscount))} à vista no PIX</p>
+    <p class="text-muted" style="font-size:var(--fs-xs);margin:6px 0 4px">${installmentText(t.total)}, ou Pix e boleto</p>
 
     ${hasCheckoutApi() ? `
     <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px">
