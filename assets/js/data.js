@@ -19,7 +19,9 @@ const CONFIG = {
   // Back-end de checkout (frete Melhor Envio + pagamento PagBank).
   // Vazio = pagamento online desligado; o site usa só o WhatsApp.
   // Em produção, aponte para a URL do serviço apetrechos-checkout.
-  checkoutApi: 'https://apetrechos-checkout.onrender.com', // back-end no Render (frete por região + PagBank)
+  // Pagamento online pausado: aguardando o PagBank liberar a conta (allowlist).
+  // Para religar, volte a URL: 'https://apetrechos-checkout.onrender.com'
+  checkoutApi: '', // back-end no Render (frete por região + PagBank)
 };
 
 const CATEGORIES = [
