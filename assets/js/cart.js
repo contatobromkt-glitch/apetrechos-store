@@ -64,7 +64,7 @@ function renderCartPage() {
         const color = l.product.colors.find((c) => c.name === l.color) || l.product.colors[0];
         return `
         <div class="cart-line">
-          <img src="${productImage(l.product, 0, { tint: color.hex })}" alt="" width="76" height="92" loading="lazy">
+          <img src="${productImage(l.product, 0, { tint: color.hex })}" alt="" width="84" height="84" loading="lazy">
           <div>
             <span class="cart-line-brand">${l.product.brand}</span>
             <a class="cart-line-name" href="${productUrl(l.product.id)}">${l.product.name}</a>

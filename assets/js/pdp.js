@@ -44,11 +44,11 @@ function renderPdp() {
       ${images.map((src, i) => `
         <button class="gallery-thumb" type="button" role="tab" data-thumb="${i}"
                 aria-current="${i === PDP.image}" aria-label="Ver imagem ${i + 1}">
-          <img src="${src}" alt="" width="78" height="94">
+          <img src="${src}" alt="" width="78" height="78">
         </button>`).join('')}
     </div>
     <div class="gallery-main" id="gallery-main">
-      <img src="${images[PDP.image]}" alt="${p.name} na cor ${PDP.color.name}" width="600" height="720" fetchpriority="high">
+      <img src="${images[PDP.image]}" alt="${p.name} na cor ${PDP.color.name}" width="600" height="600" fetchpriority="high">
       <span class="gallery-zoom-hint">${icon('zoom', 'icon icon-sm')} Clique para ampliar</span>
     </div>
   </div>

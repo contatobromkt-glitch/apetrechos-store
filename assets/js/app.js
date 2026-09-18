@@ -182,8 +182,8 @@ function productCard(product, opts = {}) {
   return `
   <article class="card${opts.reveal ? ' reveal' : ''}">
     <a class="card-media" href="${productUrl(product.id)}" aria-label="${product.name}">
-      <img src="${productImage(product, 0)}" alt="${product.name}, ${product.colors[0].name}" width="600" height="720" loading="lazy" decoding="async">
-      <img class="img-alt" src="${productImage(product, 1, { tint: (product.colors[1] || product.colors[0]).hex })}" alt="" aria-hidden="true" width="600" height="720" loading="lazy" decoding="async">
+      <img src="${productImage(product, 0)}" alt="${product.name}, ${product.colors[0].name}" width="600" height="600" loading="lazy" decoding="async">
+      <img class="img-alt" src="${productImage(product, 1, { tint: (product.colors[1] || product.colors[0]).hex })}" alt="" aria-hidden="true" width="600" height="600" loading="lazy" decoding="async">
       <span class="card-badges">${badges.join('')}</span>
     </a>
     <button class="card-wish" type="button" data-wish="${product.id}" aria-pressed="${wished}"
@@ -407,7 +407,7 @@ function renderCartDrawer() {
     const color = line.product.colors.find((c) => c.name === line.color) || line.product.colors[0];
     return `
     <div class="cart-line">
-      <img src="${productImage(line.product, 0, { tint: color.hex })}" alt="" width="76" height="92" loading="lazy">
+      <img src="${productImage(line.product, 0, { tint: color.hex })}" alt="" width="84" height="84" loading="lazy">
       <div>
         <span class="cart-line-brand">${line.product.brand}</span>
         <a class="cart-line-name" href="${productUrl(line.product.id)}">${line.product.name}</a>
@@ -462,7 +462,7 @@ function renderWishDrawer() {
   }
   body.innerHTML = items.map((product) => `
     <div class="cart-line">
-      <a href="${productUrl(product.id)}" aria-label="${product.name}"><img src="${productImage(product, 0)}" alt="${product.name}" width="76" height="92" loading="lazy"></a>
+      <a href="${productUrl(product.id)}" aria-label="${product.name}"><img src="${productImage(product, 0)}" alt="${product.name}" width="84" height="84" loading="lazy"></a>
       <div>
         <span class="cart-line-brand">${product.brand}</span>
         <a class="cart-line-name" href="${productUrl(product.id)}">${product.name}</a>
@@ -507,7 +507,7 @@ function bindSearch() {
     panel.innerHTML = results.length
       ? results.map((p) => `
         <a class="search-row" href="${productUrl(p.id)}" role="option">
-          <img src="${productImage(p, 0)}" alt="" width="44" height="52">
+          <img src="${productImage(p, 0)}" alt="" width="48" height="48">
           <span>
             <span class="sr-name">${p.name}</span><br>
             <span class="sr-meta">${p.brand} · ${brl(p.price)}</span>

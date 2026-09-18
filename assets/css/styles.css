@@ -289,7 +289,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   padding: var(--sp-2); border-radius: var(--r-md); width: 100%; text-align: left;
 }
 .search-row:hover, .search-row:focus-visible { background: var(--surface-2); }
-.search-row img { width: 44px; height: 52px; object-fit: cover; border-radius: var(--r-sm); }
+.search-row img { width: 48px; height: 48px; object-fit: cover; border-radius: var(--r-sm); }
 .search-row .sr-name { font-size: var(--fs-sm); font-weight: 500; }
 .search-row .sr-meta { font-size: var(--fs-xs); color: var(--fg-muted); }
 .search-empty { padding: var(--sp-4); font-size: var(--fs-sm); color: var(--fg-muted); text-align: center; }
@@ -367,7 +367,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ------------------------------------------------------------------ 6. Sacola */
 .cart-line { display: grid; grid-template-columns: 76px 1fr; gap: var(--sp-4); padding: var(--sp-4) 0; border-bottom: 1px solid var(--border); }
-.cart-line img { width: 76px; height: 92px; object-fit: cover; border-radius: var(--r-md); background: var(--surface-2); }
+.cart-line img { width: 84px; height: 84px; object-fit: cover; border-radius: var(--r-md); background: var(--surface-2); }
 .cart-line-brand { font-size: var(--fs-xs); letter-spacing: .1em; text-transform: uppercase; color: var(--fg-subtle); }
 .cart-line-name { font-size: var(--fs-sm); font-weight: 500; margin-top: 2px; }
 .cart-line-meta { font-size: var(--fs-xs); color: var(--fg-muted); margin-top: var(--sp-1); }
@@ -498,7 +498,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .card { position: relative; display: flex; flex-direction: column; }
 .card-media {
-  position: relative; display: block; aspect-ratio: 5 / 6;
+  position: relative; display: block; aspect-ratio: 1 / 1;
   border-radius: var(--r-lg); overflow: hidden; background: var(--surface-2);
 }
 .card-media img { width: 100%; height: 100%; object-fit: cover; transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease); }
@@ -689,7 +689,7 @@ input[type='range'] { flex: 1; accent-color: var(--primary); height: 28px; }
 }
 @keyframes shimmer { 100% { transform: translateX(100%); } }
 .sk-card { display: flex; flex-direction: column; gap: var(--sp-2); }
-.sk-card .sk-img { aspect-ratio: 5/6; border-radius: var(--r-lg); }
+.sk-card .sk-img { aspect-ratio: 1/1; border-radius: var(--r-lg); }
 .sk-card .sk-line { height: 12px; }
 .sk-card .sk-line.short { width: 45%; }
 
@@ -701,9 +701,9 @@ input[type='range'] { flex: 1; accent-color: var(--primary); height: 28px; }
 @media (min-width: 640px) { .gallery { grid-template-columns: 78px 1fr; } }
 .gallery-thumbs { display: flex; gap: var(--sp-2); order: 2; overflow-x: auto; }
 @media (min-width: 640px) { .gallery-thumbs { flex-direction: column; order: 0; overflow: visible; } }
-.gallery-thumb { width: 78px; flex: none; aspect-ratio: 5/6; border-radius: var(--r-md); overflow: hidden; border: 1.5px solid transparent; background: var(--surface-2); }
+.gallery-thumb { width: 78px; flex: none; aspect-ratio: 1/1; border-radius: var(--r-md); overflow: hidden; border: 1.5px solid transparent; background: var(--surface-2); }
 .gallery-thumb[aria-current='true'] { border-color: var(--fg); }
-.gallery-main { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface-2); aspect-ratio: 5/6; }
+.gallery-main { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--surface-2); aspect-ratio: 1/1; }
 .gallery-main img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease); }
 .gallery-main.zoomed img { transform: scale(1.7); }
 .gallery-zoom-hint { position: absolute; right: var(--sp-3); bottom: var(--sp-3); display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--r-full); background: var(--surface-glass); backdrop-filter: blur(8px); font-size: var(--fs-xs); }
